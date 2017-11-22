@@ -147,4 +147,13 @@ int main (int argc, char *argv[])
         card my_card = my_deck->deal();
         cout << "Dealt card " << my_card.suit << ", " << my_card.number << endl;
     }
+
+    // Reset shuffle and deal all
+    cout << "Reset shuffle and deal all" << endl;
+    my_deck->reset();
+    my_deck->shuffle();
+    while (my_deck->get_size()) {
+        card my_card = my_deck->deal();
+        cout << "Dealt card " << my_card.suit << ", " << my_card.number << endl;
+    }
 };
