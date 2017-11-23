@@ -54,9 +54,9 @@ private:
         }
     };
 
-    static const int NUM_SUIT_CARDS = 13;
+    static const unsigned int NUM_SUIT_CARDS = 13;
 
-    static const int NUM_MAX_CARDS = NUM_SUIT_CARDS * 4;
+    static const unsigned int NUM_MAX_CARDS = NUM_SUIT_CARDS * 4;
 
     unsigned int offset;
 
