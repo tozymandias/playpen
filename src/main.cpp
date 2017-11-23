@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <array>
 #include <sstream>
 
 using namespace std;
@@ -11,6 +12,11 @@ class card {
 
 public:
 
+    card()
+    {
+        suit = "";
+        number = "";
+    };
     card(string suit_, string number_)
         : suit(suit_),
           number(number_)
@@ -44,21 +50,23 @@ private:
             else if (i == 13) tmp_num = "K";
             else tmp_num = std::to_string(i);
             card* tmp_card = new card(suit_name, tmp_num); 
-            cards.push_back(*tmp_card);
+            cards[offset++] = *tmp_card;
         }
     };
 
     static const int NUM_SUIT_CARDS = 13;
 
+    static const int NUM_MAX_CARDS = NUM_SUIT_CARDS * 4;
+
     unsigned int offset;
 
-    std::vector<card> cards;
+    std::array<card, NUM_MAX_CARDS> cards;
 
 public:
 
     deck() 
+        : cards()
     {
-
         // Initialize offset
         offset = 0;
 
@@ -67,6 +75,9 @@ public:
         add_suit("SPADES");
         add_suit("DIAMONDS");
         add_suit("CLUBS");
+
+        // Reset offset
+        offset = 0;
     };
 
     // template< class RandomIt >
@@ -87,7 +98,7 @@ public:
 
     card deal()
     {
-        if (offset >= cards.size()) {
+        if (offset >= NUM_MAX_CARDS) {
             // throw excp
             throw deck_empty_ex;
         }
@@ -101,7 +112,7 @@ public:
 
     unsigned int get_size()
     {
-        return (cards.size() - offset);
+        return (NUM_MAX_CARDS - offset);
     };
 };
 
@@ -120,6 +131,7 @@ int main (int argc, char *argv[])
     }
 
     // Deal expect exception
+    cout << endl;
     cout << "Deal with exception" << endl;
     try {
         my_deck->deal();
@@ -132,6 +144,7 @@ int main (int argc, char *argv[])
     my_deck->reset();
 
     // Deal some
+    cout << endl;
     cout << "Deal 5 after reset" << endl;
     for (unsigned int i = 0; i < 5; i++) {
         card my_card = my_deck->deal();
@@ -139,6 +152,7 @@ int main (int argc, char *argv[])
     }
 
     // Shuffle rest
+    cout << endl;
     cout << "Shuffle and deal rest" << endl;
     my_deck->shuffle();
 
@@ -149,6 +163,7 @@ int main (int argc, char *argv[])
     }
 
     // Reset shuffle and deal all
+    cout << endl;
     cout << "Reset shuffle and deal all" << endl;
     my_deck->reset();
     my_deck->shuffle();
